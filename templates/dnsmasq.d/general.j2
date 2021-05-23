@@ -1,0 +1,6 @@
+{% if upxe.enable.ipv4 == true -%}
+listen-address={{ upxe.listen.ipv4 }}
+{% endif %}
+{% if upxe.enable.ipv6 == true -%}
+listen-address={{ upxe.listen.ipv6 }}
+{% endif %}

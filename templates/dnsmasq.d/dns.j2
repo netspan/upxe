@@ -1,0 +1,6 @@
+domain-needed
+bogus-priv
+domain={{ upxe.dns.domain }}
+{% if upxe.dns.upstream is defined -%}
+server={{ upxe.dns.upstream }}
+{% endif %}

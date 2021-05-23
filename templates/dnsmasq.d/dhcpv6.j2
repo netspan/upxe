@@ -1,0 +1,4 @@
+{% if upxe.enable.ipv6 == true -%}
+dhcp-range={{ upxe.dhcp.ipv6.start }},{{ upxe.dhcp.ipv6.end }},64,12h
+dhcp-option=option6:domain-search,{{ upxe.dns.domain }}
+{% endif %}

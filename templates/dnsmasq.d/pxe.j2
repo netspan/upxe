@@ -1,0 +1,29 @@
+# see https://www.iana.org/assignments/dhcpipv6-parameters/dhcpipv6-parameters.xhtml#processor-architecture for additional client architecture codes
+
+# BIOS IPv4 
+{% if upxe.enable.ipv4 == true and upxe.enable.bios == true -%}
+dhcp-match=set:bios_ipv4,option:client-arch,0 # x86 BIOS
+dhcp-option=tag:bios_ipv4,option:server-ip-address,{{ upxe.listen.ipv4 }}
+dhcp-option=tag:bios_ipv4,option:bootfile-name,{{ upxe.nbp.bios }}
+{% endif %}
+
+# UEFI IPv4
+{% if upxe.enable.ipv4 == true and upxe.enable.uefi == true -%}
+dhcp-match=set:uefi_ipv4,option:client-arch,7 # x64 UEFI
+dhcp-match=set:uefi_ipv4,option:client-arch,9 # EBC  
+dhcp-option=tag:uefi_ipv4,option:server-ip-address,{{ upxe.listen.ipv4 }}
+dhcp-option=tag:uefi_ipv4,option:bootfile-name,{{ upxe.nbp.uefi }}
+{% endif %}
+
+# BIOS IPv6
+{% if upxe.enable.ipv6 == true and upxe.enable.bios == true -%}
+dhcp-match=set:bios_ipv6,option6:61,0         # x86 BIOS
+dhcp-option=tag:bios_ipv6,option6:bootfile-url,"tftp://[{{ upxe.listen.ipv6  }}]/{{ upxe.nbp.bios }}"
+{% endif %}
+
+# UEFI IPv6
+{% if upxe.enable.ipv6 == true and upxe.enable.uefi == true -%}
+dhcp-match=set:uefi_ipv6,option6:61,7         # x64 UEFI
+dhcp-match=set:uefi_ipv6,option6:61,9         # EBC
+dhcp-option=tag:uefi_ipv6,option6:bootfile-url,"tftp://[{{ upxe.listen.ipv6 }}]/{{ upxe.nbp.uefi }}"
+{% endif %}

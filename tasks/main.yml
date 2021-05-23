@@ -1,0 +1,30 @@
+---
+- name: Installing dnsmasq 
+  apt:
+    name: dnsmasq
+    state: present
+    update_cache: yes
+    cache_valid_time: "3600"
+
+- name: Templating out config files for dnsmasq pxe boot server
+  template:
+    src: "templates/dnsmasq.d/{{ item }}.j2"
+    dest: "/etc/dnsmasq.d/{{ item }}"
+  loop:
+    - general
+    - dhcpv4
+    - dhcpv6
+    - dns
+    - tftp
+    - pxe
+    - host-records
+  notify:
+    - restarting dnsmasq service
+
+- name: Flushing handlers
+  meta: flush_handlers
+
+- name: Making sure dnsmasq service is started
+  service:
+    name: dnsmasq
+    state: started

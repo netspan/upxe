@@ -1,0 +1,5 @@
+{% if upxe.enable.ipv4 == true -%}
+dhcp-range={{ upxe.dhcp.ipv4.start }},{{ upxe.dhcp.ipv4.end }},12h
+dhcp-option=option:router,{{ upxe.dhcp.ipv4.router }}
+dhcp-option=option:domain-search,{{ upxe.dns.domain }}
+{% endif %}
