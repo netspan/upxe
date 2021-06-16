@@ -21,6 +21,12 @@
   notify:
     - restarting dnsmasq service
 
+- name: Creating TFTP directory if it does not exist
+  ansible.builtin.file:
+    path: "{{ upxe.tftp.root }}"
+    state: directory
+    mode: '0755'
+
 - name: Flushing handlers
   meta: flush_handlers
 
